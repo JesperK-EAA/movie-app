@@ -11,7 +11,7 @@ let counter = 0;
 /* Runs everytime the number changes */
 function changeCountNumber() {
 
-  /* Color changes after */
+  /* Color changes after*/
   if (counter == 3) {
     textCounter.style.color = "#eeff00";
   } else if (counter == 6) {
