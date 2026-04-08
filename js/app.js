@@ -25,7 +25,13 @@ const movies = [
 
 const movieList = document.getElementById("movie-list");
 
-function showMovies(movie) {
+function ShowMovies() {
+  movies.forEach((movie) => {
+    showMovie(movie);
+  });
+}
+
+function showMovie(movie) {
   const movieEle = `
     <article class="movie-card">
       <div class="movie-info">
@@ -39,6 +45,4 @@ function showMovies(movie) {
   movieList.insertAdjacentHTML("beforeend", movieEle);
 }
 
-movies.forEach((movie) => {showMovies(movie)});
-
-
+ShowMovies()
