@@ -28,10 +28,8 @@ header p {
 }
 
 main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 200px);
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 2rem;
 }
 
@@ -62,32 +60,6 @@ main {
   margin-bottom: 2rem;
 }
 
-#counter {
-  font-size: 4rem;
-  font-weight: bold;
-  color: #ffd700;
-  display: block;
-  margin: 1rem 0;
-}
-
-button {
-  background: white;
-  color: #667eea;
-  border: none;
-  padding: 1rem 2rem;
-  font-size: 1.2rem;
-  border-radius: 50px;
-  cursor: pointer;
-  margin: 0.5rem;
-  transition: all 0.3s;
-  font-weight: bold;
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
 button:active {
   transform: translateY(0);
 }
@@ -99,4 +71,55 @@ button:active {
 
 #reset-button:hover {
   background: #ff5252;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+@media (min-width: 600px) {
+  .movie-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 992px) {
+  .movie-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (min-width: 1400px) {
+  .movie-grid {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+.movie-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 1rem;
+  transition: transform 0.3s;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.movie-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.movie-card h3 {
+  color: #ffd700;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.movie-card p {
+  opacity: 0.9;
+  font-size: 0.95rem;
+  margin: 0.3rem 0;
 }

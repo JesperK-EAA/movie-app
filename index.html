@@ -1,30 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="da">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Movie App - DAG 1</title>
+    <title>Movie App - DAG 2</title>
     <link rel="stylesheet" href="css/app.css" />
     <script src="js/app.js" defer></script>
   </head>
   <body>
     <header>
       <h1>Movie App</h1>
-      <p>DAG 1: Lær JavaScript med Klik-tæller</p>
+      <p>DAG 2: Arrays, Loops & Film-lister</p>
     </header>
 
     <main>
-      <section class="counter-box" aria-labelledby="counter-title">
-        <h2 id="counter-title">Klik Tæller</h2>
-        <p class="instructions">Øv dig med klik events mens vi bygger fundamentet til vores Movie App!</p>
-
-        <div class="count-display">Antal klik: <span id="counter">0</span></div>
-
-        <button id="down-button">-1</button>
-        <button id="up-button">+1</button>
-        <button id="reset-button">Nulstil</button>
+      <section id="movie-list" class="movie-grid" aria-label="Filmliste">
+        <article class="movie-card">
+          <div class="movie-info">
+            <h3>Inception</h3>
+            <p>År: 2010</p>
+          </div>
+        </article>
+        <article class="movie-card">
+          <div class="movie-info">
+            <h3>The Matrix</h3>
+            <p>År: 1999</p>
+          </div>
+        </article>
+        <article class="movie-card">
+          <div class="movie-info">
+            <h3>Interstellar</h3>
+            <p>År: 2014</p>
+          </div>
+        </article>
       </section>
     </main>
-
   </body>
 </html>
