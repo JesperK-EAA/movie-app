@@ -23,20 +23,22 @@ const movies = [
   },
 ];
 
-const movieList = document.getElementById("movie-list")
+const movieList = document.getElementById("movie-list");
 
-movies.forEach(movie => {
-    const movieEle = `
+function showMovies(movie) {
+  const movieEle = `
     <article class="movie-card">
       <div class="movie-info">
         <h3>${movie.title}</h3>
-        <p>${movie.year}</p>
-        <p>${movie.rating}</p>
+        <p>År: ${movie.year}</p>
+        <p>Rating: ${movie.rating}</p>
       </div>
     </article>
-    `
+    `;
+
+  movieList.insertAdjacentHTML("beforeend", movieEle);
+}
+
+movies.forEach((movie) => {showMovies(movie)});
 
 
-    movieList.insertAdjacentHTML("beforeend", movieEle);
-
-});
