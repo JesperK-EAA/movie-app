@@ -14,16 +14,29 @@ const movies = [
   {
     title: "Interstellar",
     year: 2014,
-    rating: 8.7,
+    rating: 8.6,
   },
   {
     title: "The Dark Knight",
     year: 2008,
-    rating: 9.1,
+    rating: 9.0,
   },
 ];
 
+const movieList = document.getElementById("movie-list")
+
 movies.forEach(movie => {
-    console.log(movie.title);
-    
+    const movieEle = `
+    <article class="movie-card">
+      <div class="movie-info">
+        <h3>${movie.title}</h3>
+        <p>${movie.year}</p>
+        <p>${movie.rating}</p>
+      </div>
+    </article>
+    `
+
+
+    movieList.insertAdjacentHTML("beforeend", movieEle);
+
 });
