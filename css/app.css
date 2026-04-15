@@ -82,19 +82,19 @@ button:active {
 
 @media (min-width: 600px) {
   .movie-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 992px) {
   .movie-grid {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (min-width: 1400px) {
   .movie-grid {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -126,4 +126,9 @@ button:active {
 
 .movie-card--highlight {
   border: 2px solid gold;
+}
+
+img {
+  width: 100%;
+  
 }

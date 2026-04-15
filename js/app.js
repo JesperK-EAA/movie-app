@@ -5,7 +5,7 @@ let movies = [];
 
 getMovieData();
 
-/* Fething the movie data */
+/* Fething the movies data */
 async function getMovieData() {
   console.log("Henter film data...");
 
@@ -15,12 +15,14 @@ async function getMovieData() {
   await showMovies();
 }
 
+/* Listen after loop to generate all cards in a list*/
 function showMovies() {
   movies.forEach((movie) => {
     showMovie(movie);
   });
 }
 
+/* Makes the movie cards */
 function showMovie(movie) {
   const highlightClass = movie.rating >= 8.5 ? "movie-card--highlight" : "";
 
@@ -37,5 +39,3 @@ function showMovie(movie) {
 
   movieList.insertAdjacentHTML("beforeend", movieEle);
 }
-
-ShowMovies();

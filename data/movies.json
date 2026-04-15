@@ -1,7 +1,7 @@
 [
   {
-    "title": "Inception",
-    "year": 2010,
+    "title": "Fight Club",
+    "year": 1999,
     "rating": 8.8,
     "image": "https://m.media-amazon.com/images/I/51v5ZpFyaFL._AC_.jpg"
   },
@@ -12,33 +12,33 @@
     "image": "https://m.media-amazon.com/images/I/51EG732BV3L.jpg"
   },
   {
-    "title": "Interstellar",
-    "year": 2014,
-    "rating": 8.6,
-    "image": "https://m.media-amazon.com/images/I/71n58Y6XHSL._AC_SL1024_.jpg"
+    "title": "Send Help",
+    "year": 2026,
+    "rating": 6.9,
+    "image": "https://m.media-amazon.com/images/M/MV5BOTgxOWY5NTMtYjdiNi00NTIyLTkwMTQtMWNjM2IzYTU0ODgyXkEyXkFqcGc@._V1_.jpg"
   },
   {
-    "title": "The Dark Knight",
-    "year": 2008,
-    "rating": 9.0,
-    "image": "https://m.media-amazon.com/images/I/71pV4vnt4BL._AC_SL1178_.jpg"
+    "title": "One Battle After Another",
+    "year": 2025,
+    "rating": 7.7,
+    "image": "https://m.media-amazon.com/images/M/MV5BMzBkZmQ0NjMtNTZlMy00ZjdlLTg5ODUtYWFlNGM0YzE3MTg0XkEyXkFqcGc@._V1_.jpg"
   },
   {
-    "title": "Pulp Fiction",
-    "year": 1994,
-    "rating": 8.9,
-    "image": "https://m.media-amazon.com/images/I/81UTs3sMJNL._AC_SL1500_.jpg"
+    "title": "Marty Supreme",
+    "year": 2025,
+    "rating": 7.7,
+    "image": "https://m.media-amazon.com/images/M/MV5BZjA0YzJiYjItNmNiYy00YWIyLWJjOTEtZDBlODJjY2Q4ZDkxXkEyXkFqcGc@._V1_.jpg"
   },
   {
-    "title": "Whiplash",
-    "year": 2014,
-    "rating": 8.5,
-    "image": "https://m.media-amazon.com/images/I/91P9AMxGzCL._AC_SL1500_.jpg"
+    "title": "Weapons",
+    "year": 2025,
+    "rating": 7.4,
+    "image": "https://m.media-amazon.com/images/M/MV5BNTBhNWJjZWItYzY3NS00M2NkLThmOWYtYTlmNzBmN2UxZWFjXkEyXkFqcGc@._V1_.jpg"
   },
   {
-    "title": "Arrival",
-    "year": 2016,
-    "rating": 7.9,
-    "image": "https://m.media-amazon.com/images/I/71w7Nf6T6BL._AC_SL1111_.jpg"
+    "title": "Sinners",
+    "year": 2025,
+    "rating": 7.5,
+    "image": "https://m.media-amazon.com/images/M/MV5BNjIwZWY4ZDEtMmIxZS00NDA4LTg4ZGMtMzUwZTYyNzgxMzk5XkEyXkFqcGc@._V1_.jpg"
   }
 ]
