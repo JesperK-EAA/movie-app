@@ -4,6 +4,7 @@ const movieList = document.getElementById("movie-list");
 const genreSelect = document.querySelector("#genre-select");
 const searchInput = document.querySelector("#search-input");
 const sortSelect = document.querySelector("#sort-select");
+const movieCount = document.querySelector("#movie-count");
 
 const movieAPI =
   "https://raw.githubusercontent.com/cederdorff/race/refs/heads/master/data/movies.json";
@@ -78,6 +79,7 @@ function applyFiltersAndSort() {
 /* Listen after loop to generate all cards in a list*/
 function showMovies(movies) {
   movieList.innerHTML = "";
+  movieCount.textContent = `Viser ${movies.length} ud af ${allMovies.length} film`;
 
   for (const movie of movies) {
     showMovie(movie);
@@ -86,20 +88,50 @@ function showMovies(movies) {
 
 /* Makes the movie cards */
 function showMovie(movie) {
-  //console.log(movie);
-
-  const highlightClass = movie.rating >= 8.5 ? "movie-card--highlight" : "";
-
-  const movieEle = `
-    <article class="movie-card ${highlightClass}">
-      <img class="movie-image" src="${movie.image}" alt="${movie.title}">
+  const html = /* html */ `
+    <article class="movie-card" tabindex="0">
+      <img src="${movie.image}" alt="Poster af ${movie.title}" class="movie-poster" />
       <div class="movie-info">
-        <h3>${movie.title}</h3>
-        <p>År: ${movie.year}</p>
-        <p>Rating: ${movie.rating}</p>
+        <div class="title-row">
+          <h2>${movie.title}</h2>
+          <span class="year-badge">(${movie.year})</span>
+        </div>
+        <p class="genre">${movie.genre.join(", ")}</p>
+        <p class="movie-rating">⭐ ${movie.rating}</p>
+        <p class="director-line"><strong>Instruktør:</strong> ${movie.director}</p>
       </div>
     </article>
-    `;
+  `;
 
-  movieList.insertAdjacentHTML("beforeend", movieEle);
+  movieList.insertAdjacentHTML("beforeend", html);
+
+  const newCard = movieList.lastElementChild;
+  newCard.addEventListener("click", function () {
+    showMovieDialog(movie);
+  });
+
+  newCard.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      showMovieDialog(movie);
+    }
+  });
+}
+
+function showMovieDialog(movie) {
+  const dialog = document.querySelector("#movie-dialog");
+  const dialogContent = document.querySelector("#dialog-content");
+
+  dialogContent.innerHTML = /* html */ `
+    <img src="${movie.image}" alt="Poster af ${movie.title}" class="movie-poster">
+    <div class="dialog-details">
+      <h2>${movie.title} <span class="movie-year">(${movie.year})</span></h2>
+      <p class="movie-genre">${movie.genre.join(", ")}</p>
+      <p class="movie-rating">⭐ ${movie.rating}</p>
+      <p><strong>Instruktør:</strong> ${movie.director}</p>
+      <p><strong>Skuespillere:</strong> ${movie.actors.join(", ")}</p>
+      <p class="movie-description">${movie.description}</p>
+    </div>
+  `;
+
+  dialog.showModal();
 }

@@ -42,9 +42,22 @@
         </div>
       </section>
 
+      <section class="status-bar">
+        <p id="movie-count">Viser 0 film</p>
+      </section>
+
       <section id="movie-list" class="movie-grid" aria-label="Filmliste">
         <!-- Cards are going to be added in -->
       </section>
     </main>
+    
+    <dialog id="movie-dialog">
+      <form method="dialog">
+        <button id="close-dialog" aria-label="Luk">✕</button>
+        <div id="dialog-content">
+          <!-- Filmdetaljer indsættes her via JavaScript -->
+        </div>
+      </form>
+    </dialog>
   </body>
 </html>
