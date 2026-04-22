@@ -15,10 +15,13 @@
 
     <main>
       <section class="controls">
-        <label for="genre-select">Genre</label>
-        <select id="genre-select">
-          <option value="all">Alle genrer</option>
-        </select>
+        <div class="genre-row">
+          <label for="genre-select">Genre</label>
+          <select id="genre-select">
+            <option value="all">Alle genrer</option>
+          </select>
+          <span id="movie-count" class="movie-count"></span>
+        </div>
       </section>
 
       <section id="movie-list" class="movie-grid" aria-label="Filmliste">
