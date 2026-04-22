@@ -2,27 +2,11 @@
 
 const movieList = document.getElementById("movie-list");
 const genreSelecter = document.getElementById("genre-select");
-const movieCount = document.querySelector("#movie-count");
-
 const movieAPI =
   "https://raw.githubusercontent.com/cederdorff/race/refs/heads/master/data/movies.json";
 let allMovies = [];
 
-document.addEventListener("DOMContentLoaded", initApp);
-
-function initApp() {
-  document
-    .querySelector("#search-input")
-    .addEventListener("input", applyFiltersAndSort);
-  document
-    .querySelector("#genre-select")
-    .addEventListener("change", applyFiltersAndSort);
-  document
-    .querySelector("#sort-select")
-    .addEventListener("change", applyFiltersAndSort);
-
-  getMovieData();
-}
+getMovieData();
 
 /* Fething the movies data */
 async function getMovieData() {
@@ -30,37 +14,18 @@ async function getMovieData() {
   allMovies = await res.json();
 
   populateGenreSelect();
-  applyFiltersAndSort();
-}
+  await showMovies(allMovies);
 
-function showMovieDialog(movie) {
-  const dialog = document.querySelector("#movie-dialog");
-  const dialogContent = document.querySelector("#dialog-content");
-
-  dialogContent.innerHTML = `
-    <img src="${movie.image}" alt="Poster af ${movie.title}" class="movie-poster">
-    <div class="dialog-details">
-      <h2>${movie.title} <span class="movie-year">(${movie.year})</span></h2>
-      <p class="movie-genre">${movie.genre.join(", ")}</p>
-      <p class="movie-rating">⭐ ${movie.rating}</p>
-      <p><strong>Instruktør:</strong> ${movie.director}</p>
-      <p><strong>Skuespillere:</strong> ${movie.actors.join(", ")}</p>
-      <p class="movie-description">${movie.description}</p>
-    </div>
-  `;
-
-  dialog.showModal();
+  genreSelecter.addEventListener("change", applyGenreFilter);
 }
 
 /* Create options of the movies genre and insert them */
 function populateGenreSelect() {
   const genres = new Set();
-  let genreCount = {};
 
   for (const movie of allMovies) {
     for (const genre of movie.genre) {
       genres.add(genre);
-      genreCount[genre] = (genreCount[genre] || 0) + 1;
     }
   }
 
@@ -69,53 +34,31 @@ function populateGenreSelect() {
   for (const genre of sortedGenres) {
     genreSelecter.insertAdjacentHTML(
       "beforeend",
-      `<option value="${genre}">${genre} (${genreCount[genre]})</option>`,
+      `<option value="${genre}">${genre}</option>`,
     );
   }
 }
 
 /* Finds movie data out from the genre */
-function applyFiltersAndSort() {
-  const searchTerm = document
-    .querySelector("#search-input")
-    .value.trim()
-    .toLowerCase();
-  const selectedGenre = document.querySelector("#genre-select").value;
-  const sortOption = document.querySelector("#sort-select").value;
+function applyGenreFilter() {
+  const selectedGenre = genreSelecter.value;
+  console.log("change:", selectedGenre);
 
-  let filteredMovies = allMovies.filter(function (movie) {
-    const matchesTitle = movie.title.toLowerCase().includes(searchTerm);
-    const matchesGenre =
-      selectedGenre === "all" || movie.genre.includes(selectedGenre);
-    return matchesTitle && matchesGenre;
-  });
-
-  if (sortOption === "title") {
-    filteredMovies.sort((movieA, movieB) =>
-      movieA.title.localeCompare(movieB.title),
-    );
-  } else if (sortOption === "year") {
-    filteredMovies.sort((movieA, movieB) => movieB.year - movieA.year);
-  } else if (sortOption === "rating") {
-    filteredMovies.sort((movieA, movieB) => movieB.rating - movieA.rating);
+  if (selectedGenre === "all") {
+    showMovies(allMovies);
+    return;
   }
+
+  const filteredMovies = allMovies.filter((movie) => {
+    return movie.genre.includes(selectedGenre);
+  });
 
   showMovies(filteredMovies);
 }
 
 /* Listen after loop to generate all cards in a list*/
 function showMovies(movies) {
-  const movieList = document.querySelector("#movie-list");
-  const movieCount = document.querySelector("#movie-count");
-
   movieList.innerHTML = "";
-  movieCount.textContent = `Viser ${movies.length} ud af ${allMovies.length} film`;
-
-  if (movies.length === 0) {
-    movieList.innerHTML =
-      '<p class="empty">Ingen film matcher din søgning eller genre.</p>';
-    return;
-  }
 
   for (const movie of movies) {
     showMovie(movie);
@@ -124,27 +67,20 @@ function showMovies(movies) {
 
 /* Makes the movie cards */
 function showMovie(movie) {
-  const movieList = document.querySelector("#movie-list");
+  //console.log(movie);
 
-  const movieCard = `
-    <article class="movie-card" tabindex="0">
-      <img src="${movie.image}" alt="Poster af ${movie.title}" class="movie-poster" />
+  const highlightClass = movie.rating >= 8.5 ? "movie-card--highlight" : "";
+
+  const movieEle = `
+    <article class="movie-card ${highlightClass}">
+      <img class="movie-image" src="${movie.image}" alt="${movie.title}">
       <div class="movie-info">
-        <div class="title-row">
-          <h2>${movie.title}</h2>
-          <span class="year-badge">(${movie.year})</span>
-        </div>
-        <p class="genre">${movie.genre.join(", ")}</p>
-        <p class="movie-rating">⭐ ${movie.rating}</p>
-        <p class="director-line"><strong>Instruktør:</strong> ${movie.director}</p>
+        <h3>${movie.title}</h3>
+        <p>År: ${movie.year}</p>
+        <p>Rating: ${movie.rating}</p>
       </div>
     </article>
-  `;
+    `;
 
-  movieList.insertAdjacentHTML("beforeend", movieCard);
-
-  const newCard = movieList.lastElementChild;
-  newCard.addEventListener("click", function () {
-    showMovieDialog(movie);
-  });
+  movieList.insertAdjacentHTML("beforeend", movieEle);
 }
