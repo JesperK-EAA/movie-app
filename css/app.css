@@ -138,6 +138,7 @@ button:active {
 }
 
 #movie-dialog {
+  border-radius: 16px;
   width: min(92vw, 920px);
   background: #454b53;
 }
@@ -148,13 +149,18 @@ button:active {
   gap: 2rem;
 }
 
+.dialog-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
 .dialog-description {
   padding: 1rem;
   border-left: 4px solid #69c8f0;
   font-style: italic;
   background: rgba(105, 200, 240, 0.08);
 }
-
 .movie-card h3 {
   color: #ffd700;
   margin-bottom: 0.5rem;
