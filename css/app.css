@@ -86,6 +86,12 @@ button:active {
   }
 }
 
+@media (max-width: 900px) {
+  .controls {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (min-width: 992px) {
   .movie-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -135,8 +141,8 @@ img {
 
 .controls {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 1rem;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 0.8rem;
 }
 
 .control-group {

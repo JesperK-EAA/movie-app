@@ -3,10 +3,15 @@
 const movieList = document.getElementById("movie-list");
 const genreSelect = document.querySelector("#genre-select");
 const searchInput = document.querySelector("#search-input");
+const sortSelect = document.querySelector("#sort-select");
 
 const movieAPI =
   "https://raw.githubusercontent.com/cederdorff/race/refs/heads/master/data/movies.json";
 let allMovies = [];
+
+genreSelect.addEventListener("change", applyFiltersAndSort);
+searchInput.addEventListener("input", applyFiltersAndSort);
+sortSelect.addEventListener("change", applyFiltersAndSort);
 
 getMovieData();
 
@@ -16,10 +21,7 @@ async function getMovieData() {
   allMovies = await res.json();
 
   populateGenreSelect();
-  applyFilters();
-
-  genreSelect.addEventListener("change", applyFilters);
-  searchInput.addEventListener("input", applyFilters);
+  applyFiltersAndSort();
 }
 
 /* Create options of the movies genre and insert them */
@@ -43,17 +45,32 @@ function populateGenreSelect() {
 }
 
 /* Finds movie data out from the genre */
-function applyFilters() {
+function applyFiltersAndSort() {
   const selectedGenre = genreSelect.value;
   const searchValue = searchInput.value.trim().toLowerCase();
+  const sortOption = sortSelect.value;
 
-  const filteredMovies = allMovies.filter(function (movie) {
+  let filteredMovies = allMovies.filter(function (movie) {
     const matchesGenre =
       selectedGenre === "all" || movie.genre.includes(selectedGenre);
     const matchesSearch = movie.title.toLowerCase().includes(searchValue);
 
     return matchesGenre && matchesSearch;
   });
+
+  if (sortOption === "title") {
+    filteredMovies.sort(function (movieA, movieB) {
+      return movieA.title.localeCompare(movieB.title);
+    });
+  } else if (sortOption === "year") {
+    filteredMovies.sort(function (movieA, movieB) {
+      return movieB.year - movieA.year;
+    });
+  } else if (sortOption === "rating") {
+    filteredMovies.sort(function (movieA, movieB) {
+      return movieB.rating - movieA.rating;
+    });
+  }
 
   showMovies(filteredMovies);
 }
