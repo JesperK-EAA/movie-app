@@ -1,7 +1,9 @@
 "use strict";
 
 const movieList = document.getElementById("movie-list");
-const genreSelecter = document.getElementById("genre-select");
+const genreSelect = document.querySelector("#genre-select");
+const searchInput = document.querySelector("#search-input");
+
 const movieAPI =
   "https://raw.githubusercontent.com/cederdorff/race/refs/heads/master/data/movies.json";
 let allMovies = [];
@@ -14,9 +16,10 @@ async function getMovieData() {
   allMovies = await res.json();
 
   populateGenreSelect();
-  await showMovies(allMovies);
+  applyFilters();
 
-  genreSelecter.addEventListener("change", applyGenreFilter);
+  genreSelect.addEventListener("change", applyFilters);
+  searchInput.addEventListener("input", applyFilters);
 }
 
 /* Create options of the movies genre and insert them */
@@ -32,7 +35,7 @@ function populateGenreSelect() {
   const sortedGenres = [...genres].sort((a, b) => a.localeCompare(b));
 
   for (const genre of sortedGenres) {
-    genreSelecter.insertAdjacentHTML(
+    genreSelect.insertAdjacentHTML(
       "beforeend",
       `<option value="${genre}">${genre}</option>`,
     );
@@ -40,17 +43,16 @@ function populateGenreSelect() {
 }
 
 /* Finds movie data out from the genre */
-function applyGenreFilter() {
-  const selectedGenre = genreSelecter.value;
-  console.log("change:", selectedGenre);
+function applyFilters() {
+  const selectedGenre = genreSelect.value;
+  const searchValue = searchInput.value.trim().toLowerCase();
 
-  if (selectedGenre === "all") {
-    showMovies(allMovies);
-    return;
-  }
+  const filteredMovies = allMovies.filter(function (movie) {
+    const matchesGenre =
+      selectedGenre === "all" || movie.genre.includes(selectedGenre);
+    const matchesSearch = movie.title.toLowerCase().includes(searchValue);
 
-  const filteredMovies = allMovies.filter((movie) => {
-    return movie.genre.includes(selectedGenre);
+    return matchesGenre && matchesSearch;
   });
 
   showMovies(filteredMovies);
