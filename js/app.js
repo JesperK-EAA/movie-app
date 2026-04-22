@@ -8,7 +8,21 @@ const movieAPI =
   "https://raw.githubusercontent.com/cederdorff/race/refs/heads/master/data/movies.json";
 let allMovies = [];
 
-getMovieData();
+document.addEventListener("DOMContentLoaded", initApp);
+
+function initApp() {
+  document
+    .querySelector("#search-input")
+    .addEventListener("input", applyFiltersAndSort);
+  document
+    .querySelector("#genre-select")
+    .addEventListener("change", applyFiltersAndSort);
+  document
+    .querySelector("#sort-select")
+    .addEventListener("change", applyFiltersAndSort);
+
+  getMovieData();
+}
 
 /* Fething the movies data */
 async function getMovieData() {
@@ -16,9 +30,7 @@ async function getMovieData() {
   allMovies = await res.json();
 
   populateGenreSelect();
-  await showMovies(allMovies);
-
-  genreSelecter.addEventListener("change", applyGenreFilter);
+  applyFiltersAndSort();
 }
 
 /* Create options of the movies genre and insert them */
@@ -44,48 +56,76 @@ function populateGenreSelect() {
 }
 
 /* Finds movie data out from the genre */
-function applyGenreFilter() {
-  const selectedGenre = genreSelecter.value;
+function applyFiltersAndSort() {
+  const searchTerm = document
+    .querySelector("#search-input")
+    .value.trim()
+    .toLowerCase();
+  const selectedGenre = document.querySelector("#genre-select").value;
+  const sortOption = document.querySelector("#sort-select").value;
 
-  if (selectedGenre === "all") {
-    showMovies(allMovies);
-    return;
-  }
-
-  const filteredMovies = allMovies.filter((movie) => {
-    return movie.genre.includes(selectedGenre);
+  let filteredMovies = allMovies.filter(function (movie) {
+    const matchesTitle = movie.title.toLowerCase().includes(searchTerm);
+    const matchesGenre =
+      selectedGenre === "all" || movie.genre.includes(selectedGenre);
+    return matchesTitle && matchesGenre;
   });
+
+  if (sortOption === "title") {
+    filteredMovies.sort((movieA, movieB) =>
+      movieA.title.localeCompare(movieB.title),
+    );
+  } else if (sortOption === "year") {
+    filteredMovies.sort((movieA, movieB) => movieB.year - movieA.year);
+  } else if (sortOption === "rating") {
+    filteredMovies.sort((movieA, movieB) => movieB.rating - movieA.rating);
+  }
 
   showMovies(filteredMovies);
 }
 
 /* Listen after loop to generate all cards in a list*/
 function showMovies(movies) {
+  const movieList = document.querySelector("#movie-list");
+  const movieCount = document.querySelector("#movie-count");
+
   movieList.innerHTML = "";
+  movieCount.textContent = `Viser ${movies.length} ud af ${allMovies.length} film`;
+
+  if (movies.length === 0) {
+    movieList.innerHTML =
+      '<p class="empty">Ingen film matcher din søgning eller genre.</p>';
+    return;
+  }
 
   for (const movie of movies) {
     showMovie(movie);
   }
-
-  movieCount.textContent = `Viser ${movies.length} film`;
 }
 
 /* Makes the movie cards */
 function showMovie(movie) {
-  //console.log(movie);
+  const movieList = document.querySelector("#movie-list");
 
-  const highlightClass = movie.rating >= 8.5 ? "movie-card--highlight" : "";
-
-  const movieEle = `
-    <article class="movie-card ${highlightClass}">
-      <img class="movie-image" src="${movie.image}" alt="${movie.title}">
+  const movieCard = `
+    <article class="movie-card" tabindex="0">
+      <img src="${movie.image}" alt="Poster af ${movie.title}" class="movie-poster" />
       <div class="movie-info">
-        <h3>${movie.title}</h3>
-        <p>År: ${movie.year}</p>
-        <p>Rating: ${movie.rating}</p>
+        <div class="title-row">
+          <h2>${movie.title}</h2>
+          <span class="year-badge">(${movie.year})</span>
+        </div>
+        <p class="genre">${movie.genre.join(", ")}</p>
+        <p class="movie-rating">⭐ ${movie.rating}</p>
+        <p class="director-line"><strong>Instruktør:</strong> ${movie.director}</p>
       </div>
     </article>
-    `;
+  `;
 
-  movieList.insertAdjacentHTML("beforeend", movieEle);
+  movieList.insertAdjacentHTML("beforeend", movieCard);
+
+  const newCard = movieList.lastElementChild;
+  newCard.addEventListener("click", function () {
+    showMovieDialog(movie);
+  });
 }

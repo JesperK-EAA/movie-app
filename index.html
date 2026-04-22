@@ -9,23 +9,44 @@
   </head>
   <body>
     <header>
-      <h1>Movie App</h1>
-      <p>DAG 2: Arrays, Loops & Film-lister</p>
+      <h1>Movie Database</h1>
+      <p class="subtitle">Søgning, genre og sortering</p>
     </header>
-
     <main>
       <section class="controls">
-        <div class="genre-row">
+        <div class="control-group grow">
+          <label for="search-input">Søg på titel</label>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Fx matrix, dune eller dark"
+          />
+        </div>
+
+        <div class="control-group">
           <label for="genre-select">Genre</label>
           <select id="genre-select">
             <option value="all">Alle genrer</option>
           </select>
-          <span id="movie-count" class="movie-count"></span>
+        </div>
+
+        <div class="control-group">
+          <label for="sort-select">Sortering</label>
+          <select id="sort-select">
+            <option value="none">Ingen sortering</option>
+            <option value="title">Titel (A-Å)</option>
+            <option value="year">Årstal (nyeste først)</option>
+            <option value="rating">Rating (højeste først)</option>
+          </select>
         </div>
       </section>
 
-      <section id="movie-list" class="movie-grid" aria-label="Filmliste">
-        <!-- Cards are going to be added in -->
+      <section class="status-bar">
+        <p id="movie-count">Viser 0 film</p>
+      </section>
+
+      <section id="movie-list" class="movie-grid">
+        <p class="loading">Loader film...</p>
       </section>
     </main>
   </body>
